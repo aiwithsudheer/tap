@@ -33,9 +33,15 @@
         }
 
         /* --- Animation --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* --- Layout & Container --- */
@@ -43,13 +49,12 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
-            animation: fadeIn 0.8s ease-out;
         }
 
         /* --- Header & Title --- */
         .header {
             text-align: center;
-            padding: 4rem 1rem;
+            padding: 4rem 1rem 2rem 1rem;
             margin-bottom: 3rem;
         }
 
@@ -66,9 +71,45 @@
             font-size: 1.25rem;
             color: var(--secondary-text);
             font-weight: 400;
+            margin-bottom: 2rem;
         }
 
+        /* --- Hero Animation --- */
+        .hero-animation {
+            height: 60px;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .hero-animation .dot {
+            position: absolute;
+            bottom: 0;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            animation: rise 10s infinite ease-in-out;
+            opacity: 0;
+        }
+        @keyframes rise {
+            0% { transform: translateY(0); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-60px); opacity: 0; }
+        }
+        /* Stagger the animations */
+        .hero-animation .dot:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .hero-animation .dot:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .hero-animation .dot:nth-child(3) { left: 30%; animation-delay: 0.5s; }
+        .hero-animation .dot:nth-child(4) { left: 40%; animation-delay: 2s; }
+        .hero-animation .dot:nth-child(5) { left: 50%; animation-delay: 1.5s; }
+        .hero-animation .dot:nth-child(6) { left: 60%; animation-delay: 3s; }
+        .hero-animation .dot:nth-child(7) { left: 70%; animation-delay: 2.5s; }
+        .hero-animation .dot:nth-child(8) { left: 80%; animation-delay: 4s; }
+        .hero-animation .dot:nth-child(9) { left: 90%; animation-delay: 3.5s; }
+
         /* --- Article Content --- */
+        article section {
+            margin-bottom: 2rem;
+        }
         article h2 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
@@ -76,6 +117,9 @@
             margin-top: 4rem;
             margin-bottom: 1.5rem;
             color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         
         article h3 {
@@ -93,19 +137,10 @@
             color: var(--secondary-text);
         }
 
-        article a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 700;
-            background-image: linear-gradient(var(--accent-color), var(--accent-color));
-            background-position: 0% 100%;
-            background-repeat: no-repeat;
-            background-size: 0% 2px;
-            transition: background-size 0.3s;
-        }
-
-        article a:hover {
-            background-size: 100% 2px;
+        .icon {
+            width: 40px;
+            height: 40px;
+            opacity: 0.7;
         }
 
         /* --- Diagram Styling --- */
@@ -238,45 +273,62 @@
             .container {
                 padding: 1.5rem;
             }
+            .icon {
+                width: 32px;
+                height: 32px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header class="header">
+        <header class="header fade-in">
             <h1>The Avalanche Philosophy</h1>
             <p class="subtitle">Understanding the hidden cycles of effort and success.</p>
+            <div class="hero-animation">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
         </header>
 
         <article>
-            <section id="introduction">
+            <section id="introduction" class="fade-in">
                 <p>In our social media–driven world, success stories often seem like sudden, magical moments. We see people “blow up” overnight, secure big promotions, or land million-dollar deals. But behind almost every story of rapid success is a hidden, unglamorous truth: years of consistent grind that built to a tipping point.</p>
                 <p>That tipping point, when invisible effort finally bursts into visible results, is what I call The Avalanche Philosophy.</p>
                 <p>Just like an avalanche, success starts with silent accumulation. Snow piles up unnoticed on a mountain for days, weeks, or even months until one small shift releases it all at once. This philosophy captures that journey in four core stages, along with the critical choice that restarts the cycle.</p>
             </section>
 
-            <section id="diagram" class="diagram-container">
+            <section id="diagram" class="diagram-container fade-in">
                  <h2>The Avalanche Philosophy Diagram</h2>
                 <img src="https://i.imgur.com/3Z6xXo5.png" alt="Diagram of The Avalanche Philosophy showing two cycles of Grind, Rise, Saturation, and Re-Grind." onerror="this.onerror=null;this.src='https://placehold.co/800x450/ecf0f1/2c3e50?text=Diagram+Not+Found';">
             </section>
 
-            <section id="stage-1">
-                <h2>Stage 1: The Grind</h2>
+            <section id="stage-1" class="fade-in">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.707 12.707l-1.414-1.414L19 12.586V10a1 1 0 00-2 0v2.586l-1.293-1.293-1.414 1.414L18 17.414V20a1 1 0 002 0v-2.586l3.707-3.707zM3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm1 4a1 1 0 00-1 1v2a1 1 0 001 1h8a1 1 0 001-1V9a1 1 0 00-1-1H4z"/></svg>
+                    Stage 1: The Grind
+                </h2>
                 <p>This is where dreams are born and most often abandoned. The Grind is repetitive, often boring, and rarely rewarding in the moment. It is the season of early mornings, late nights, and constant practice with no immediate payoff. Here, progress is mostly invisible. But something important is happening: skills are compounding, networks are quietly forming, and credibility is being built.</p>
-                <p>Most people quit here because they mistake invisible growth for no growth at all. If you give up during this stage, you will never reach the avalanche. There are no fruits without enduring the grind.</p>
                 
                 <h3>Inflection Point: The Avalanche</h3>
                 <p>Then one day, perhaps triggered by a lucky introduction, a viral post, or a sudden opportunity, the work pays off in a surge of results. This is The Avalanche, the steep climb in your career graph when years of preparation collide with the right moment. To outsiders, it looks like an “overnight success.” To you, it is the inevitable release of momentum you have been building all along.</p>
             </section>
 
-            <section id="stage-2">
-                <h2>Stage 2: The Rise</h2>
+            <section id="stage-2" class="fade-in">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 2a8 8 0 100 16 8 8 0 000-16zm-1 5a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1zm-2 4a1 1 0 112 0v2a1 1 0 11-2 0v-2zM9 9a1 1 0 112 0v2a1 1 0 11-2 0V9zm6 0a1 1 0 112 0v2a1 1 0 11-2 0V9z"/></svg>
+                    Stage 2: The Rise
+                </h2>
                 <p>The Avalanche carries you into The Rise, a period of rapid growth and increasing opportunities. Your reputation expands, revenue grows, and people start seeking you out. It is tempting here to believe you have “made it” and the climb will never slow. But the truth is that no rise lasts forever.</p>
             </section>
 
-            <section id="stage-3">
-                <h2>Stage 3: Saturation & Comfort</h2>
+            <section id="stage-3" class="fade-in">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-6a1 1 0 102 0 1 1 0 00-2 0zm-1-3a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1zm-1-3a1 1 0 011-1h4a1 1 0 110 2H9a1 1 0 01-1-1z"/></svg>
+                    Stage 3: Saturation & Comfort
+                </h2>
                 <h3>Stage 3a: Saturation</h3>
                 <p>Eventually, growth flattens. This is Saturation, the plateau phase. You are still performing well, but results feel stagnant. This is an alert stage, the point where you must re-evaluate, innovate, and prepare for your next big climb. Detecting saturation early is one of the most valuable skills you can develop.</p>
 
@@ -284,12 +336,15 @@
                 <p>If you miss the signs of saturation, you slide into Comfort. This is where decline begins. You might still look successful from the outside, but you are living off past momentum while your skills and impact quietly erode. Comfort feels safe, but it is the riskiest place to stay. It not only slows your growth, it also rewires your brain to believe “things are fine,” creating mental justifications to avoid change.</p>
             </section>
             
-            <section id="re-grind">
-                <h2>The Re-Grind</h2>
+            <section id="re-grind" class="fade-in">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4a8 8 0 00-8 8h2a6 6 0 116 6v2a8 8 0 008-8h-2a6 6 0 11-6-6V4zM8.707 7.293a1 1 0 00-1.414 0l-4 4a1 1 0 000 1.414l4 4a1 1 0 001.414-1.414L6.414 13H12a1 1 0 100-2H6.414l2.293-2.293a1 1 0 000-1.414z"/></svg>
+                    The Re-Grind
+                </h2>
                 <p>The only way out of Comfort, or even a prolonged plateau, is to consciously restart The Grind. That means embracing the humility of beginning again, applying what you have learned, and building towards your next avalanche. The good news is that the second cycle is often faster because you start with more skills, resources, and relationships.</p>
             </section>
 
-            <section id="the-cycle">
+            <section id="the-cycle" class="fade-in">
                 <h2>The Cycle Repeats</h2>
                 <div class="cycle-flow">
                     Grind → Rise → Saturation → Comfort → Re-Grind
@@ -302,21 +357,9 @@
                     <li>Stay honest in Comfort.</li>
                     <li>Stay willing to Re-Grind.</li>
                 </ul>
-                <p>Every re-grind has the potential to spark another avalanche, and those who embrace this truth keep evolving indefinitely.</p>
             </section>
             
-            <section id="personalities">
-                <h2>What the Avalanche Reveals</h2>
-                <p>The Avalanche Philosophy does not just describe success. It shows how different people navigate, or fail to navigate, the cycle.</p>
-                 <ul>
-                    <li><strong>Highly successful people</strong> have faster avalanches, skip the comfort stage, and embrace multiple re-grind cycles.</li>
-                    <li><strong>People with curiosity but no patience</strong> rarely make it past The Grind. They leave before momentum builds.</li>
-                    <li><strong>Visionaries</strong> often have multiple re-grind points, intentionally reinventing themselves.</li>
-                    <li><strong>Once-successful but now stagnant individuals</strong> are often those who stayed too long in the comfort zone.</li>
-                </ul>
-            </section>
-
-            <section id="conclusion">
+            <section id="conclusion" class="fade-in">
                 <h2>Why This Matters</h2>
                 <p>Understanding this cycle keeps you from quitting too early, coasting too long, or mistaking comfort for success. It reminds you that real growth is not a straight line. It is a series of avalanches, separated by long seasons of invisible work.</p>
                 <p>If you embrace the philosophy, you stop chasing quick wins and start building the kind of momentum that, when released, feels unstoppable.</p>
@@ -331,5 +374,22 @@
         <p class="copyright">&copy; 2025 Sudheer T. All Rights Reserved.</p>
     </footer>
 
+    <script>
+        // Simple scroll animation script
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        const targets = document.querySelectorAll('.fade-in');
+        targets.forEach(target => {
+            observer.observe(target);
+        });
+    </script>
 </body>
 </html>
